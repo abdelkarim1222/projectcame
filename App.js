@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import { FontAwesome } from '@expo/vector-icons'; // Use FontAwesome as an example
+import axios from 'axios';
 
 export default function App() {
   const CameraRef = useRef(null);
