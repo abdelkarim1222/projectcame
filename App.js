@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
-import { FontAwesome } from '@expo/vector-icons'; // Use FontAwesome as an example
+import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 
 export default function App() {
@@ -22,8 +22,19 @@ export default function App() {
     if (faces.length > 0) {
       console.log('Faces Detected: ', faces.length);
       setDetectedFaces(faces);
+      sendDetectedFacesToServer(faces);
     } else {
       console.log('No Face detected!!!');
+    }
+  };
+
+  const sendDetectedFacesToServer = async (faces) => {
+    const serverUrl = 'http://192.168.1.41:5000'; // Remplacez par l'adresse de votre serveur Flask
+    try {
+      const response = await axios.post(`${serverUrl}/process_faces`, { faces });
+      console.log('Server Response:', response.data);
+    } catch (error) {
+      console.error('Error sending faces to server:', error.message);
     }
   };
 
