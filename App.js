@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
+import { FontAwesome } from '@expo/vector-icons'; // Use FontAwesome as an example
 
 export default function App() {
   const CameraRef = useRef(null);
@@ -38,6 +39,10 @@ export default function App() {
     setIsDetecting((prev) => !prev);
   };
 
+  const getBorderColor = () => {
+    return isDetecting ? 'green' : 'red';
+  };
+
   const renderFaceBoxes = () => {
     return detectedFaces.map((face, index) => (
       <View
@@ -49,6 +54,7 @@ export default function App() {
             top: face.bounds.origin.y,
             width: face.bounds.size.width,
             height: face.bounds.size.height,
+            borderColor: getBorderColor(),
           },
         ]}
       />
@@ -90,7 +96,11 @@ export default function App() {
       </View>
       <TouchableOpacity style={styles.button} onPress={toggleFaceDetection}>
         <Text style={styles.buttonText}>
-          {isDetecting ? 'Stop Detection' : ' Start Face Detection'}
+          {isDetecting ? (
+            <FontAwesome name="camera" size={40} />
+          ) : (
+            <FontAwesome name="camera" size={40} />
+          )}
         </Text>
       </TouchableOpacity>
     </View>
@@ -100,27 +110,26 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#C1CECE',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  faceBox:{
-    position:'absolute',
-    borderColor:'red',
-    borderWidth:2,
-    borderRadius:5
+  faceBox: {
+    position: 'absolute',
+    borderWidth: 2,
+    borderRadius: 5,
   },
-  cameraContainer:{
-    flex:1,
+  cameraContainer: {
+    flex: 1,
     width: '100%',
     overflow: 'hidden',
-    borderRadius:10,
+    borderRadius: 10,
   },
-  camera:{
-    flex:1
+  camera: {
+    flex: 1,
   },
-  button:{
-    backgroundColor: '#03498db',
+  button: {
+    backgroundColor: '#376B69',
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -129,5 +138,5 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 18,
-  }
+  },
 });
